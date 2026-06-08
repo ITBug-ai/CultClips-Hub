@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cult Clips Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#08080b;--bg2:#0f0f14;--bg3:#16161e;--bg4:#1e1e28;--border:rgba(255,255,255,0.05);--border2:rgba(255,255,255,0.1);--text:#eee;--muted:#666;--accent:#c084fc;--accent2:#e879f9;--gold:#fbbf24;--teal:#34d399;--blue:#60a5fa;--pink:#f472b6;--red:#f87171;--warm:#fb923c;--glow:rgba(192,132,252,0.15)}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:14px;min-height:100vh}
+::selection{background:var(--accent);color:#000}
+header{background:linear-gradient(180deg,rgba(192,132,252,0.08) 0%,transparent 100%);border-bottom:1px solid var(--border);padding:20px 32px;display:flex;align-items:center;gap:16px}
+.logo{width:40px;height:40px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:16px;color:#000;box-shadow:0 0 20px rgba(192,132,252,0.3)}
+.logo-t{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:24px;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.logo-sub{font-size:11px;color:var(--muted);margin-left:auto;font-family:'Space Grotesk',sans-serif;letter-spacing:1px;text-transform:uppercase}
+.container{max-width:900px;margin:0 auto;padding:28px 24px}
+.tabs{display:flex;gap:2px;background:var(--bg2);border-radius:12px;padding:4px;margin-bottom:28px;border:1px solid var(--border)}
+.tab{font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:600;padding:10px 18px;background:transparent;border:none;color:var(--muted);cursor:pointer;border-radius:8px;transition:all .2s;flex:1;text-align:center}
+.tab:hover{color:var(--text)}
+.tab.on{background:var(--bg4);color:var(--accent);box-shadow:0 0 12px var(--glow)}
+.search-bar{display:flex;gap:8px;margin-bottom:14px}
+.search-bar input{flex:1;background:var(--bg2);border:1px solid var(--border2);border-radius:10px;color:var(--text);font-family:'Inter',sans-serif;font-size:13px;padding:11px 16px;outline:none;transition:all .2s}
+.search-bar input:focus{border-color:var(--accent);box-shadow:0 0 12px var(--glow)}
+.search-bar input::placeholder{color:#555}
+.pills{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px}
+.pill{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:11px;letter-spacing:.5px;text-transform:uppercase;padding:5px 14px;border-radius:20px;border:1px solid var(--border2);background:transparent;color:var(--muted);cursor:pointer;transition:all .2s}
+.pill:hover{border-color:var(--accent);color:var(--accent)}
+.pill.on{background:linear-gradient(135deg,var(--accent),var(--accent2));border-color:transparent;color:#000}
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:18px;margin-bottom:10px;transition:all .25s;position:relative;overflow:hidden}
+.card:hover{border-color:rgba(192,132,252,0.2);box-shadow:0 4px 24px rgba(0,0,0,0.4)}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--accent),transparent);opacity:0;transition:opacity .3s}
+.card:hover::before{opacity:.5}
+.card-top{display:flex;gap:14px;align-items:flex-start}
+.card-num{font-family:'Space Grotesk',sans-serif;font-size:32px;font-weight:700;color:rgba(255,255,255,0.04);min-width:40px;line-height:1}
+.card-body{flex:1;min-width:0}
+.card-name{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;margin-bottom:3px}
+.card-hot{display:inline-block;font-size:10px;padding:2px 8px;border-radius:4px;font-weight:600;margin-left:8px;vertical-align:middle}
+.hot-fire{background:rgba(251,146,60,0.15);color:var(--warm);border:1px solid rgba(251,146,60,0.25)}
+.hot-skull{background:rgba(248,113,113,0.1);color:var(--red);border:1px solid rgba(248,113,113,0.2)}
+.hot-star{background:rgba(251,191,36,0.1);color:var(--gold);border:1px solid rgba(251,191,36,0.2)}
+.hot-bolt{background:rgba(96,165,250,0.1);color:var(--blue);border:1px solid rgba(96,165,250,0.2)}
+.card-desc{font-size:12px;color:var(--muted);margin-bottom:10px;line-height:1.6}
+.card-vibe{font-size:11px;color:var(--pink);margin-bottom:10px;line-height:1.5;font-style:italic}
+.tg{font-size:10px;padding:3px 8px;border-radius:4px;font-family:'Space Grotesk',sans-serif;font-weight:600;letter-spacing:.3px;display:inline-block;margin:0 4px 4px 0}
+.tg-g{background:rgba(192,132,252,0.1);color:var(--accent2);border:1px solid rgba(192,132,252,0.2)}
+.tg-t{background:rgba(251,191,36,0.08);color:var(--gold);border:1px solid rgba(251,191,36,0.15)}
+.tg-c{background:rgba(244,114,182,0.08);color:var(--pink);border:1px solid rgba(244,114,182,0.15)}
+.tg-l{background:rgba(248,113,113,0.08);color:var(--red);border:1px solid rgba(248,113,113,0.15)}
+.btns{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+.b{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:11px;letter-spacing:.4px;text-transform:uppercase;padding:6px 12px;border-radius:8px;border:1px solid var(--border2);background:transparent;color:var(--text);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:5px;transition:all .15s}
+.b:hover{background:var(--bg3);border-color:var(--border2)}
+.b-a{background:linear-gradient(135deg,var(--accent),var(--accent2));border:none;color:#000}
+.b-a:hover{opacity:.88;background:linear-gradient(135deg,var(--accent),var(--accent2))}
+.b-t{background:rgba(52,211,153,0.1);border:1px solid rgba(52,211,153,0.25);color:var(--teal)}
+.b-t:hover{background:rgba(52,211,153,0.18)}
+.gm{display:none;padding:16px 0 0;border-top:1px solid var(--border);margin-top:14px}
+.gm.open{display:block}
+.gm-item{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:8px}
+.gm-title{font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:600;color:var(--gold);margin-bottom:4px}
+.gm-text{font-size:12px;color:#aaa;line-height:1.6}
+.gm-text a{color:var(--blue);text-decoration:none}
+.gm-text a:hover{text-decoration:underline}
+.empty{text-align:center;padding:3rem 1rem;color:var(--muted)}
+.pane{display:none}.pane.on{display:block}
+.sl{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin:20px 0 10px}
+.plat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
+.pc{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:14px;text-decoration:none;display:block;transition:all .2s}
+.pc:hover{border-color:rgba(192,132,252,0.2);background:var(--bg3);transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,0.3)}
+.pc-i{font-size:13px;font-weight:700;margin-bottom:6px;color:var(--accent);font-family:'Space Grotesk',sans-serif}
+.pc-n{font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:600;color:var(--text);margin-bottom:3px}
+.pc-t{font-size:11px;color:var(--muted);line-height:1.4}
+.dh{font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:700;margin-bottom:4px;background:linear-gradient(135deg,var(--text),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.ds{font-size:13px;color:var(--muted);margin-bottom:20px}
+.tip{background:rgba(192,132,252,0.06);border:1px solid rgba(192,132,252,0.12);border-radius:10px;padding:12px 14px;font-size:12px;color:#b4a0e8;line-height:1.6;margin-top:16px}
+.step{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--border);align-items:flex-start}
+.step:last-child{border-bottom:none}
+.sn{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#000;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.st{font-weight:600;font-size:14px;margin-bottom:3px;font-family:'Space Grotesk',sans-serif}
+.ss{font-size:12px;color:var(--muted);line-height:1.5}
+.dlc{background:var(--bg2);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.dlr{display:flex;align-items:center;gap:14px;padding:14px 18px;border-bottom:1px solid var(--border)}
+.dlr:last-child{border-bottom:none}
+.dli{flex:1}.dlt{font-weight:500;font-size:14px;margin-bottom:2px;font-family:'Space Grotesk',sans-serif}.dld{font-size:12px;color:var(--muted)}
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:100;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px)}
+.modal-bg.open{display:flex}
+.modal{background:var(--bg2);border:1px solid var(--border2);border-radius:16px;width:100%;max-width:640px;max-height:85vh;display:flex;flex-direction:column}
+.modal-h{display:flex;align-items:center;justify-content:space-between;padding:18px 20px;border-bottom:1px solid var(--border)}
+.modal-t{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700}
+.modal-x{background:none;border:none;color:var(--muted);cursor:pointer;font-size:22px;line-height:1;padding:2px 6px}
+.modal-x:hover{color:var(--text)}
+.modal-b{padding:20px;overflow-y:auto;flex:1}
+.modal-f{padding:14px 20px;border-top:1px solid var(--border);display:flex;gap:8px;justify-content:flex-end}
+.cb{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:12px;position:relative}
+.cl{font-family:'Space Grotesk',sans-serif;font-size:10px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.ct{font-size:14px;line-height:1.7;color:var(--text)}
+.hb{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:12px}
+.ht{font-size:13px;line-height:1.8;color:var(--blue);word-break:break-word}
+.cs{position:absolute;top:10px;right:10px;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:10px;padding:4px 10px;border-radius:4px;border:1px solid var(--border2);background:transparent;color:var(--muted);cursor:pointer}
+.cs:hover{color:var(--text);border-color:var(--text)}
+.cs.ok{color:var(--teal);border-color:var(--teal)}
+.tr-card{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:8px;display:flex;align-items:center;gap:12px}
+.tr-card .tr-status{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.tr-used{background:var(--teal)}
+.tr-saved{background:var(--gold)}
+.tr-new{background:var(--accent)}
+.tr-info{flex:1;min-width:0}
+.tr-title{font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:600;margin-bottom:2px}
+.tr-meta{font-size:11px;color:var(--muted)}
+.tr-actions{display:flex;gap:4px}
+.tr-input{display:flex;gap:8px;margin-bottom:16px}
+.tr-input input{flex:1;background:var(--bg2);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-size:13px;padding:10px 14px;outline:none;font-family:'Inter',sans-serif}
+.tr-input input:focus{border-color:var(--accent)}
+.tr-input select{background:var(--bg2);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-size:12px;padding:8px;outline:none;font-family:'Space Grotesk',sans-serif}
+.tr-legend{display:flex;gap:16px;margin-bottom:14px;font-size:11px;color:var(--muted)}
+.tr-legend span{display:flex;align-items:center;gap:5px}
+.tr-dot{width:8px;height:8px;border-radius:50%;display:inline-block}
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:24px}
+.stat-card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:14px;text-align:center}
+.stat-n{font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:700;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.stat-l{font-size:11px;color:var(--muted);margin-top:3px}
+@media(max-width:600px){.stat-grid{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">CC</div>
+  <div class="logo-t">cult clips</div>
+  <div class="logo-sub">BTS content engine</div>
+</header>
+
+<div class="container">
+  <div class="tabs">
+    <button class="tab on" onclick="showTab('artists')">Artists</button>
+    <button class="tab" onclick="showTab('search')">Find clips</button>
+    <button class="tab" onclick="showTab('tracker')">Clip tracker</button>
+    <button class="tab" onclick="showTab('workflow')">Workflow</button>
+  </div>
+
+  <div id="pane-artists" class="pane on">
+    <div class="stat-grid">
+      <div class="stat-card"><div class="stat-n">30</div><div class="stat-l">Artists loaded</div></div>
+      <div class="stat-card"><div class="stat-n">140+</div><div class="stat-l">Goldmine sources</div></div>
+      <div class="stat-card"><div class="stat-n">5</div><div class="stat-l">Genres</div></div>
+      <div class="stat-card"><div class="stat-n" id="tracker-count">0</div><div class="stat-l">Clips tracked</div></div>
+    </div>
+    <div class="search-bar"><input type="text" id="a-search" placeholder="Search artists..." onkeydown="if(event.key==='Enter')searchA()"><button class="b b-a" onclick="searchA()">Search</button></div>
+    <div class="pills">
+      <button class="pill on" onclick="filterA(this,'all')">All</button>
+      <button class="pill" onclick="filterA(this,'legend')">Gone too soon</button>
+      <button class="pill" onclick="filterA(this,'cult')">Cult following</button>
+      <button class="pill" onclick="filterA(this,'rising')">Rising / hot rn</button>
+      <button class="pill" onclick="filterA(this,'relevancy')">Relevancy wave</button>
+    </div>
+    <div id="a-results"></div>
+  </div>
+
+  <div id="pane-search" class="pane">
+    <div class="search-bar"><input type="text" id="clip-input" placeholder="Any artist name..." onkeydown="if(event.key==='Enter')findClips()"><button class="b b-a" onclick="findClips()">Find clips</button></div>
+    <div id="clip-results"><div class="empty">Type any artist name to find original BTS content across all platforms</div></div>
+  </div>
+
+  <div id="pane-tracker" class="pane">
+    <div class="sl" style="margin-top:0;margin-bottom:12px">yt-dlp clip generator</div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:14px;line-height:1.6;">Paste a YouTube URL, set optional start/end timestamps, and get the exact terminal command to download just that clip. Copy it, paste into terminal, done.</p>
+    <div style="display:flex;gap:8px;margin-bottom:8px;flex-wrap:wrap">
+      <input type="text" id="yt-artist" placeholder="Artist name" style="flex:1;min-width:120px;background:var(--bg2);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-size:13px;padding:10px 14px;outline:none;font-family:'Inter',sans-serif">
+      <input type="text" id="yt-url" placeholder="YouTube URL" style="flex:2;min-width:200px;background:var(--bg2);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-size:13px;padding:10px 14px;outline:none;font-family:'Inter',sans-serif">
+    </div>
+    <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;align-items:center">
+      <div style="display:flex;align-items:center;gap:6px">
+        <span style="font-size:11px;color:var(--muted);font-family:'Space Grotesk',sans-serif;font-weight:600">START</span>
+        <input type="text" id="yt-start" placeholder="0:00" style="width:70px;background:var(--bg2);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-size:13px;padding:8px 10px;outline:none;text-align:center;font-family:'Inter',sans-serif">
+      </div>
+      <div style="display:flex;align-items:center;gap:6px">
+        <span style="font-size:11px;color:var(--muted);font-family:'Space Grotesk',sans-serif;font-weight:600">END</span>
+        <input type="text" id="yt-end" placeholder="1:00" style="width:70px;background:var(--bg2);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-size:13px;padding:8px 10px;outline:none;text-align:center;font-family:'Inter',sans-serif">
+      </div>
+      <select id="yt-fmt" style="background:var(--bg2);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-size:12px;padding:8px 10px;outline:none;font-family:'Space Grotesk',sans-serif">
+        <option value="mp4">MP4 (video)</option>
+        <option value="mp3">MP3 (audio only)</option>
+        <option value="best">Best quality</option>
+      </select>
+      <button class="b b-a" onclick="genCmd()">Generate command</button>
+    </div>
+    <div id="cmd-output" style="display:none;background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:16px;position:relative">
+      <div class="cl">Terminal command — paste this into your terminal</div>
+      <pre id="cmd-text" style="font-size:13px;color:var(--teal);font-family:'Courier New',monospace;white-space:pre-wrap;word-break:break-all;line-height:1.6;margin:0"></pre>
+      <button class="cs" id="cmd-copy" onclick="copyCmd()" style="top:10px;right:10px">Copy</button>
+      <div style="margin-top:10px;display:flex;gap:6px">
+        <button class="b b-t" onclick="addFromCmd()" style="font-size:10px">Save to tracker</button>
+      </div>
+    </div>
+    <div class="tip" style="margin-top:0;margin-bottom:20px">
+      <strong>How it works:</strong> Open your terminal (Command Prompt on Windows, Terminal on Mac), paste the command, hit Enter. yt-dlp downloads just the section you specified. Leave start/end blank to download the full video. <a href="https://github.com/yt-dlp/yt-dlp" target="_blank" style="color:var(--blue)">Install yt-dlp here</a> if you haven't yet.
+    </div>
+    <div class="sl">Clip tracker</div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:14px;">Track clips you've found, downloaded, and posted. Click the colored dot to cycle status.</p>
+    <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap">
+      <input type="text" id="tr-artist" placeholder="Artist name" style="flex:1;min-width:100px;background:var(--bg2);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-size:13px;padding:10px 14px;outline:none;font-family:'Inter',sans-serif">
+      <input type="text" id="tr-url" placeholder="URL or description" style="flex:2;min-width:160px;background:var(--bg2);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-size:13px;padding:10px 14px;outline:none;font-family:'Inter',sans-serif">
+      <select id="tr-status" style="background:var(--bg2);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-size:12px;padding:8px;outline:none;font-family:'Space Grotesk',sans-serif"><option value="new">New</option><option value="saved">Saved</option><option value="used">Used</option></select>
+      <button class="b b-a" onclick="addClip()">Add</button>
+    </div>
+    <div class="tr-legend">
+      <span><span class="tr-dot" style="background:var(--accent)"></span> New</span>
+      <span><span class="tr-dot" style="background:var(--gold)"></span> Downloaded</span>
+      <span><span class="tr-dot" style="background:var(--teal)"></span> Posted</span>
+    </div>
+    <div id="tracker-list"></div>
+  </div>
+
+  <div id="pane-workflow" class="pane">
+    <div style="margin-bottom:28px">
+      <div class="step"><div class="sn">1</div><div><div class="st">Pick the artist based on whats trending</div><div class="ss">Anniversaries, album drops, and viral moments spike engagement massively. A Juice WRLD clip on Dec 8 does 10x normal numbers.</div></div></div>
+      <div class="step"><div class="sn">2</div><div><div class="st">Go to goldmine sources first</div><div class="ss">Each artist card lists specific original content sources. Check these BEFORE searching randomly. Quality and originality matter.</div></div></div>
+      <div class="step"><div class="sn">3</div><div><div class="st">Find an unclipped moment</div><div class="ss">Watch full interviews and docs. The candid laugh, the raw freestyle, that 15-second moment nobody pulled yet. Thats your content.</div></div></div>
+      <div class="step"><div class="sn">4</div><div><div class="st">Log it in the clip tracker</div><div class="ss">Save the URL and artist in the tracker tab so you never lose a clip. Mark it as new, saved, or used after posting.</div></div></div>
+      <div class="step"><div class="sn">5</div><div><div class="st">Keep the edit minimal</div><div class="ss">These clips work BECAUSE they feel raw. Subtle text overlay. Maybe a fade. No heavy effects. Let the moment breathe.</div></div></div>
+      <div class="step"><div class="sn">6</div><div><div class="st">Match the caption to the fanbase</div><div class="ss">Juice fans want nostalgic. Carti fans want mysterious. MJ fans want reverent. Use the caption generator per artist.</div></div></div>
+    </div>
+    <div class="sl">Key dates (engagement spikes)</div>
+    <div class="dlc">
+      <div class="dlr"><div class="dli"><div class="dlt">Dec 8 - Juice WRLD</div><div class="dld">Engagement 5-10x. Prep 3-5 clips in advance.</div></div></div>
+      <div class="dlr"><div class="dli"><div class="dlt">Jun 18 - XXXTentacion</div><div class="dld">X content floods timelines. Post early to catch the wave.</div></div></div>
+      <div class="dlr"><div class="dli"><div class="dlt">Sep 7 - Mac Miller</div><div class="dld">Swimming and Tiny Desk clips dominate every year.</div></div></div>
+      <div class="dlr"><div class="dli"><div class="dlt">Nov 15 - Lil Peep</div><div class="dld">Emo/alt community floods socials. Raw emotional content wins.</div></div></div>
+      <div class="dlr"><div class="dli"><div class="dlt">Feb 19 - Pop Smoke</div><div class="dld">NYC drill community activates hard.</div></div></div>
+      <div class="dlr"><div class="dli"><div class="dlt">Mar 31 - Nipsey Hussle</div><div class="dld">TMC everywhere. Business wisdom and community clips perform best.</div></div></div>
+      <div class="dlr"><div class="dli"><div class="dlt">Jun 25 - Michael Jackson</div><div class="dld">Anniversary of passing + biopic momentum in 2026. Positive legacy content only.</div></div></div>
+      <div class="dlr"><div class="dli"><div class="dlt">Album drop days (any artist)</div><div class="dld">When a cult artist drops, post old BTS. Rides the algorithm wave.</div></div></div>
+    </div>
+    <div class="sl" style="margin-top:24px">Download tools</div>
+    <div class="dlc">
+      <div class="dlr"><div class="dli"><div class="dlt">yt-dlp</div><div class="dld">Free. YouTube, Twitter, Instagram, Reddit.</div></div><a href="https://github.com/yt-dlp/yt-dlp" target="_blank" class="b">GitHub</a></div>
+      <div class="dlr"><div class="dli"><div class="dlt">4K Video Downloader</div><div class="dld">Desktop app. No command line.</div></div><a href="https://www.4kdownload.com/products/videodownloader-35" target="_blank" class="b">Get it</a></div>
+      <div class="dlr"><div class="dli"><div class="dlt">SnapInsta</div><div class="dld">Instagram Reels and Stories. Browser based.</div></div><a href="https://snapinsta.app" target="_blank" class="b">Open</a></div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-bg" id="modal" onclick="if(event.target===this)closeModal()">
+  <div class="modal"><div class="modal-h"><div class="modal-t" id="m-title">Caption</div><button class="modal-x" onclick="closeModal()">x</button></div><div class="modal-b" id="m-body"></div><div class="modal-f"><button class="b" onclick="copyAll()">Copy caption + hashtags</button><button class="b b-a" onclick="closeModal()">Done</button></div></div>
+</div>
+
+<script>
+var EV=['#StudioSession','#BehindTheScenes','#BTS','#MusicIsLife','#StudioVibes','#RealMusic','#InTheStudio','#RawTalent'];
+var D=[
+{n:'Juice WRLD',c:'legend',g:'Hip-Hop',hot:'GOAT-level cult',badge:'hot-skull',vibe:'Nostalgic, emotional, 999 forever. Every clip is sacred.',best:'Hour-long freestyles, raw studio sessions, candid moments',gm:[{t:'Tim Westwood TV freestyle',d:'THE legendary freestyle. Over an hour of bars. Millions of unclipped moments.',u:'https://www.youtube.com/results?search_query=juice+wrld+tim+westwood+freestyle'},{t:'LA Leakers freestyle',d:'Iconic session. Shorter but quotable. Multiple angles.',u:'https://www.youtube.com/results?search_query=juice+wrld+la+leakers+freestyle'},{t:'Lyrical Lemonade / Cole Bennett',d:'Tons of BTS. Studio sessions, music video shoots, candid van moments.',u:'https://www.youtube.com/results?search_query=juice+wrld+lyrical+lemonade+behind+the+scenes'},{t:'Into the Abyss (HBO doc)',d:'Full doc with raw studio footage, personal moments, unreleased session clips.',u:'https://www.youtube.com/results?search_query=juice+wrld+into+the+abyss+documentary'},{t:'Grade A Productions channel',d:'His label. Official studio content and unreleased previews.',u:'https://www.youtube.com/results?search_query=grade+a+productions+juice+wrld'}],cap:['999 forever. This Juice WRLD studio moment hits different knowing what we lost.','Juice freestyling for fun is better than most rappers best written bars. Gone too soon.','Every Juice WRLD clip feels like a gift. This one is special.'],tags:['#JuiceWRLD','#999','#LLJW','#JuiceWRLDForever','#999Club','#LegendNeverDie']},
+{n:'XXXTentacion',c:'legend',g:'Hip-Hop/Alt',hot:'Intense cult',badge:'hot-skull',vibe:'Intense loyalty, philosophical. Fans treat X like a prophet.',best:'Old livestreams, philosophical rants, studio aggression, transformation clips',gm:[{t:'No Jumper interview (original)',d:'The interview that broke X to a wider audience. Full of clippable moments.',u:'https://www.youtube.com/results?search_query=xxxtentacion+no+jumper+interview+full'},{t:'Look at Me documentary (Hulu)',d:'Unseen footage, studio sessions, jail calls, personal moments.',u:'https://www.youtube.com/results?search_query=xxxtentacion+look+at+me+documentary+clips'},{t:'Old Instagram Lives (archived)',d:'Fan channels archived hundreds of X lives. Raw, unfiltered, deeply personal.',u:'https://www.youtube.com/results?search_query=xxxtentacion+instagram+live+archive'},{t:'Studio session footage',d:'Various producers shared raw studio footage. The energy is unmatched.',u:'https://www.youtube.com/results?search_query=xxxtentacion+studio+session+recording'}],cap:['X in the studio was pure raw energy. Nobody else made music like this.','This XXXTentacion moment shows the side of him most people never saw. LLJ.','The duality of X in one clip. This is why millions still ride for him.'],tags:['#XXXTentacion','#LLJ','#BADVIBESFOREVER','#Jahseh','#RIPXtentacion']},
+{n:'Mac Miller',c:'legend',g:'Hip-Hop',hot:'Deeply beloved',badge:'hot-skull',vibe:'Warm nostalgia, musical appreciation, most dope energy.',best:'Tiny Desk, piano sessions, funny candid moments, Swimming era footage',gm:[{t:'NPR Tiny Desk Concert',d:'One of the most watched Tiny Desks ever. Every minute is clippable. Piano moments are sacred.',u:'https://www.youtube.com/results?search_query=mac+miller+tiny+desk+concert'},{t:'Celebration of Life concert',d:'Full tribute concert with speeches, performances, and emotional moments.',u:'https://www.youtube.com/results?search_query=mac+miller+celebration+of+life+concert'},{t:'Swimming studio sessions',d:'Behind the scenes of Swimming. Raw studio moments showing musical genius.',u:'https://www.youtube.com/results?search_query=mac+miller+swimming+behind+the+scenes+studio'},{t:'Most Dope Family (reality show)',d:'His reality show. Endless candid, funny content. Massively underclipped.',u:'https://www.youtube.com/results?search_query=mac+miller+most+dope+family+full'},{t:'Zane Lowe interviews',d:'Deep conversations about music and life. Full of emotional moments.',u:'https://www.youtube.com/results?search_query=mac+miller+zane+lowe+interview'}],cap:['Mac Miller at the piano is the most peaceful thing on the internet. Most dope forever.','This Mac moment is why he will never be forgotten. Pure soul.','Nobody made you feel at home like Mac Miller. This clip is everything.'],tags:['#MacMiller','#MostDope','#Swimming','#Circles','#92TilInfinity','#RIPMac']},
+{n:'Lil Peep',c:'legend',g:'Emo/Hip-Hop',hot:'Emo cult icon',badge:'hot-skull',vibe:'Raw emotion, outsider identity, GothBoiClique loyalty.',best:'Raw acoustic performances, personal vulnerable moments, GBC crew footage',gm:[{t:'Everybody\'s Everything documentary',d:'Official doc with unseen footage, home videos, studio sessions, tour life.',u:'https://www.youtube.com/results?search_query=lil+peep+everybodys+everything+documentary'},{t:'Montreality interview',d:'Most candid interview. Personal, deep, and clippable.',u:'https://www.youtube.com/results?search_query=lil+peep+montreality+interview'},{t:'GothBoiClique footage',d:'Early GBC content with Tracy, Horsehead. Raw underground era.',u:'https://www.youtube.com/results?search_query=lil+peep+gothboiclique+behind+the+scenes'}],cap:['Lil Peep was too real for this world. This clip proves it.','The vulnerability in Peep\'s music came from moments like this. Forever GBC.','This raw Peep moment is why his music saved so many people.'],tags:['#LilPeep','#GBC','#GothBoiClique','#COWYS','#CryBaby','#RIPPeep']},
+{n:'Pop Smoke',c:'legend',g:'Drill',hot:'NYC drill icon',badge:'hot-skull',vibe:'NYC pride, woo energy, drill culture.',best:'Studio voice sessions (that deep voice), NYC footage, drill energy',gm:[{t:'Studio recording sessions',d:'His deep voice recording is mesmerizing content. Producers have shared footage.',u:'https://www.youtube.com/results?search_query=pop+smoke+studio+session+recording'},{t:'Canarsie and NYC footage',d:'Original footage from Brooklyn. Real NYC energy.',u:'https://www.youtube.com/results?search_query=pop+smoke+canarsie+brooklyn+original'},{t:'Interviews and freestyles',d:'Breakfast Club, On The Radar. The voice always stops scrolling.',u:'https://www.youtube.com/results?search_query=pop+smoke+interview+freestyle'}],cap:['Pop Smoke\'s voice in the studio is literally ASMR for drill fans. Woo.','Brooklyn lost a king. This Pop Smoke moment is everything.','The energy Pop Smoke brought to every room was unmatched.'],tags:['#PopSmoke','#Woo','#BrooklynDrill','#SFTSAFTM','#RIPPopSmoke']},
+{n:'Nipsey Hussle',c:'legend',g:'Hip-Hop',hot:'TMC movement',badge:'hot-skull',vibe:'Respect, hustle mentality, business wisdom. Words treated like gospel.',best:'Business wisdom interviews, community footage, motivational studio moments',gm:[{t:'BigBoyTV interviews',d:'Multiple long-form interviews. Business wisdom, deeply clippable.',u:'https://www.youtube.com/results?search_query=nipsey+hussle+big+boy+interview'},{t:'Vlad TV interviews',d:'Hours of conversation. Every segment is a potential motivation clip.',u:'https://www.youtube.com/results?search_query=nipsey+hussle+vlad+tv+interview'},{t:'The Marathon documentary',d:'His documentary about the Crenshaw journey. Original footage.',u:'https://www.youtube.com/results?search_query=nipsey+hussle+marathon+documentary'},{t:'Breakfast Club interviews',d:'Classic with Charlamagne. Wisdom and real talk.',u:'https://www.youtube.com/results?search_query=nipsey+hussle+breakfast+club+full'}],cap:['Nipsey spoke like a man who knew his time was limited. Every word matters. TMC.','This Nipsey clip is a whole business class in 60 seconds.','The way Nipsey moved through life is a blueprint.'],tags:['#NipseyHussle','#TMC','#TheMarathonContinues','#Crenshaw','#RIPNipsey']},
+{n:'Playboi Carti',c:'cult',g:'Hip-Hop',hot:'Chaotic cult',badge:'hot-fire',vibe:'Unhinged, avant-garde, meme meets genuine worship. Mystery drives engagement.',best:'Rare studio footage (anything feels exclusive), concert mosh pits, mysterious moments',gm:[{t:'Concert mosh pit footage',d:'Carti shows are legendary chaos. Search for official festival sets.',u:'https://www.youtube.com/results?search_query=playboi+carti+concert+mosh+pit+live'},{t:'Narcissist / Music tour footage',d:'Tour BTS and live footage. Rare and high engagement.',u:'https://www.youtube.com/results?search_query=playboi+carti+narcissist+tour+behind+the+scenes'},{t:'Studio snippets from producers',d:'WLR sessions footage from producers and engineers.',u:'https://www.youtube.com/results?search_query=playboi+carti+studio+session+whole+lotta+red'}],cap:['Any Carti studio footage feels like classified intel. This clip is rare.','The energy at a Carti show is not explainable. You have to see it.','Carti moves in silence but his cult never sleeps.'],tags:['#PlayboiCarti','#Carti','#WholeLottaRed','#WLR','#Opium']},
+{n:'Kanye West',c:'cult',g:'Hip-Hop',hot:'Most documented genius',badge:'hot-star',vibe:'Genius worship, old Kanye nostalgia, production appreciation.',best:'Jeen-Yuhs footage, studio production, rants that aged well, Sunday Service',gm:[{t:'Jeen-Yuhs documentary (Netflix)',d:'Three-part doc spanning decades. Endless raw footage.',u:'https://www.youtube.com/results?search_query=kanye+west+jeen+yuhs+documentary+clips'},{t:'Sunday Service performances',d:'Cinematic, emotional, visually stunning. Highly clippable.',u:'https://www.youtube.com/results?search_query=kanye+west+sunday+service+full'},{t:'Zane Lowe interviews',d:'Multiple iconic interviews across eras. Every one has viral potential.',u:'https://www.youtube.com/results?search_query=kanye+west+zane+lowe+interview+full'}],cap:['Early Kanye in the studio before the world knew his name. Priceless.','Say what you want about Ye but in the studio the genius is undeniable.','This Kanye moment aged perfectly. The vision was always there.'],tags:['#Kanye','#Ye','#KanyeWest','#Yeezy','#Donda','#JeenYuhs']},
+{n:'Kid Cudi',c:'cult',g:'Hip-Hop/Alt',hot:'Mental health icon',badge:'hot-star',vibe:'Deep emotional connection, mental health community, MOTM nostalgia.',best:'Vulnerable interviews, humming sessions, mental health candor',gm:[{t:'A Man Named Scott documentary (Amazon)',d:'Career-spanning doc with raw studio footage and personal struggles.',u:'https://www.youtube.com/results?search_query=kid+cudi+man+named+scott+documentary'},{t:'Mental health interviews',d:'His openness created iconic moments. Deeply clippable.',u:'https://www.youtube.com/results?search_query=kid+cudi+mental+health+interview'},{t:'Kids See Ghosts with Kanye',d:'Studio footage of Cudi and Ye. Two cults collide.',u:'https://www.youtube.com/results?search_query=kids+see+ghosts+studio+session'}],cap:['Kid Cudi saved a generation and clips like this show why.','Cudi humming in the studio is therapy. Music for the soul.','This vulnerable Cudi moment is why millions feel connected.'],tags:['#KidCudi','#Cudi','#MOTM','#ManOnTheMoon','#CudiFam']},
+{n:'Frank Ocean',c:'cult',g:'R&B',hot:'Rarest cult in music',badge:'hot-star',vibe:'Reverent, aesthetic, patient. ANY Frank content is treated like buried treasure.',best:'ANY footage (so private that everything feels exclusive and goes viral)',gm:[{t:'Blonde era rare footage',d:'Extremely limited BTS. Every second is valuable because Frank never shares.',u:'https://www.youtube.com/results?search_query=frank+ocean+blonde+behind+the+scenes+studio'},{t:'Endless visual album',d:'Warehouse livestream building a staircase. Cinematic and clippable.',u:'https://www.youtube.com/results?search_query=frank+ocean+endless+visual+album'},{t:'Festival performances',d:'Rare live sets. Every performance is an event.',u:'https://www.youtube.com/results?search_query=frank+ocean+live+performance+festival'}],cap:['Frank Ocean footage is rarer than a solar eclipse. Protect this clip.','Finding Frank Ocean BTS is like finding gold. This moment is sacred.','Frank could post a blank screen and it would go viral.'],tags:['#FrankOcean','#Blonde','#ChannelOrange','#Blonded','#Endless']},
+{n:'Travis Scott',c:'cult',g:'Hip-Hop',hot:'Rager cult',badge:'hot-fire',vibe:'Hype energy, Cactus Jack loyalty, rage culture.',best:'Concert rage, studio production, Cactus Jack creative process',gm:[{t:'Look Mom I Can Fly (Netflix)',d:'Full career doc. Astroworld creation, tour life, personal moments.',u:'https://www.youtube.com/results?search_query=travis+scott+look+mom+i+can+fly+clips'},{t:'Studio sessions with Mike Dean',d:'The production process is mesmerizing content.',u:'https://www.youtube.com/results?search_query=travis+scott+studio+session+making+beat'},{t:'Utopia creation BTS',d:'Behind his biggest album. Creative direction and studio experiments.',u:'https://www.youtube.com/results?search_query=travis+scott+utopia+behind+the+scenes'}],cap:['Travis Scott building a beat from scratch is mesmerizing. Cactus Jack forever.','The creative process behind Utopia was insane. This BTS shows it.','This is what a Travis studio session actually looks like.'],tags:['#TravisScott','#LaFlame','#CactusJack','#Utopia','#Astroworld']},
+{n:'Tyler the Creator',c:'cult',g:'Hip-Hop/Alt',hot:'Creative genius',badge:'hot-star',vibe:'Creative appreciation, humor, Golf Wang. Personality as big as the music.',best:'Production breakdowns, hilarious personality, creative process',gm:[{t:'Nardwuar interviews',d:'Multiple legendary interviews. Chemistry is unmatched. Always go viral.',u:'https://www.youtube.com/results?search_query=tyler+the+creator+nardwuar+interview'},{t:'Golf Media / Camp Flog Gnaw',d:'His own media and festival. Personality on full display.',u:'https://www.youtube.com/results?search_query=tyler+the+creator+camp+flog+gnaw+behind+the+scenes'},{t:'Studio production sessions',d:'Tyler building beats, playing piano. Chromakopia era especially.',u:'https://www.youtube.com/results?search_query=tyler+the+creator+studio+session+making+beat'}],cap:['Tyler making a beat is a masterclass in creativity.','This Tyler moment is peak personality. Effortlessly iconic.','The creative range of Tyler is insane. All in one clip.'],tags:['#TylerTheCreator','#GolfWang','#Chromakopia','#IGOR','#Tyler']},
+{n:'A$AP Rocky',c:'cult',g:'Hip-Hop',hot:'Fashion x music',badge:'hot-star',vibe:'Style-obsessed, Harlem pride, AWGE collective. Aesthetic is everything.',best:'Fashion meets music, AWGE content, Harlem culture, studio drip',gm:[{t:'SVDDXNLY documentary',d:'Career-defining doc. Tour life, Harlem footage, A$AP Mob.',u:'https://www.youtube.com/results?search_query=asap+rocky+svddxnly+documentary'},{t:'AWGE channel content',d:'Creative collective. Fashion, music, experimental. Underclipped.',u:'https://www.youtube.com/results?search_query=AWGE+asap+rocky+behind+the+scenes'}],cap:['Rocky makes the studio look like a fashion editorial.','A$AP Rocky behind the scenes is pure Harlem elegance.','This Rocky moment is fashion and music in perfect harmony.'],tags:['#ASAPRocky','#AWGE','#ASAPMob','#PrettyFlacko','#Harlem']},
+{n:'Dominic Fike',c:'cult',g:'Indie/Alt',hot:'Gen-Z indie icon',badge:'hot-bolt',vibe:'Effortlessly cool, genre-bending. Euphoria crossover fans.',best:'Raw guitar sessions, personable candid moments, creative versatility',gm:[{t:'Studio songwriting sessions',d:'Dom switching between singing, rapping, guitar. Versatility IS the content.',u:'https://www.youtube.com/results?search_query=dominic+fike+studio+session+recording'},{t:'COLORS and acoustic sets',d:'His voice raw and unproduced is incredible content.',u:'https://www.youtube.com/results?search_query=dominic+fike+acoustic+live+performance+COLORS'},{t:'Euphoria BTS and press tour',d:'Crossover audience makes this content reach wider.',u:'https://www.youtube.com/results?search_query=dominic+fike+euphoria+behind+the+scenes'}],cap:['Dominic Fike making music feels effortless. Real talent on display.','Dom can rap, sing, and play guitar in one take. Different.','This Dominic Fike moment is peak indie energy.'],tags:['#DominicFike','#DomFike','#SunburnDeluxe','#IndieMusic','#Euphoria']},
+{n:'Lil Uzi Vert',c:'cult',g:'Hip-Hop',hot:'Chaotic energy',badge:'hot-fire',vibe:'Unhinged love, anime-meets-rap, dancing energy.',best:'Dancing clips, energetic studio moments, personality and humor',gm:[{t:'Studio dancing sessions',d:'Uzi dancing to his own beats. These clips always go viral.',u:'https://www.youtube.com/results?search_query=lil+uzi+vert+studio+session+dancing'},{t:'Nardwuar interview',d:'Uzi being fully himself is peak content.',u:'https://www.youtube.com/results?search_query=lil+uzi+vert+nardwuar+interview'},{t:'Concert energy compilations',d:'The jumps, crowd control, the transfers of energy.',u:'https://www.youtube.com/results?search_query=lil+uzi+vert+live+concert+energy'}],cap:['Uzi dancing to his own beat is the energy we all need.','Nobody has more fun making music than Lil Uzi Vert.','The Uzi energy is unmatched. This BTS moment goes crazy.'],tags:['#LilUziVert','#Uzi','#EternalAtake','#LUV','#PinkTape']},
+{n:'Molly Santana',c:'rising',g:'Hip-Hop',hot:'BLOWING UP RN',badge:'hot-fire',vibe:'Drake co-sign, 600K to 7M listeners overnight. Trap meets rage. The come-up is the content.',best:'Drake collab BTS, Rolling Loud debut, studio sessions, personality clips',gm:[{t:'Ran to Atlanta music video BTS with Drake',d:'Drake co-signed her as "biggest in the game" on camera. This footage is viral gold.',u:'https://www.youtube.com/results?search_query=molly+santana+drake+ran+to+atlanta+behind+the+scenes'},{t:'Rolling Loud 2026 performance',d:'Her debut Rolling Loud set. She brought out North West. The crowd energy is insane.',u:'https://www.youtube.com/results?search_query=molly+santana+rolling+loud+2026'},{t:'Complex interview',d:'Told the full story of how Drake found her through Future name-dropping her.',u:'https://www.youtube.com/results?search_query=molly+santana+complex+interview+drake'},{t:'Early Molly\'s World era content',d:'Pre-fame footage from 2021-2023 era. The come-up story is powerful content.',u:'https://www.youtube.com/results?search_query=molly+santana+mollys+world+early'}],cap:['Molly Santana went from 600K to 7 MILLION listeners. This is how it happened.','Drake called her the biggest in the game. Watch this BTS moment.','The Molly Santana come-up story is insane. This clip is just the beginning.'],tags:['#MollySantana','#Drake','#RanToAtlanta','#Iceman','#RollingLoud','#RisingRapper']},
+{n:'Ken Carson',c:'rising',g:'Rage/Hip-Hop',hot:'Opium rage king',badge:'hot-fire',vibe:'Opium label chaos, rage music, More Chaos era. TikTok edits get billions of views.',best:'Concert mosh pits, studio rage sessions, Opium crew footage, Rolling Loud sets',gm:[{t:'Rolling Loud 2026 sets',d:'Multiple nights in Orlando. The crowd energy with Ken is unmatched in rage music.',u:'https://www.youtube.com/results?search_query=ken+carson+rolling+loud+2026+live'},{t:'More Chaos / A Great Chaos studio BTS',d:'Behind the albums. Rage beats being built. Producers share clips regularly.',u:'https://www.youtube.com/results?search_query=ken+carson+studio+session+more+chaos'},{t:'Opium label group content',d:'Ken with Carti, Destroy Lonely, Homixide Gang. Label crew footage.',u:'https://www.youtube.com/results?search_query=ken+carson+opium+label+behind+the+scenes'},{t:'Concert compilations',d:'Ken Carson shows are pure violence (in a good way). Mosh pit content.',u:'https://www.youtube.com/results?search_query=ken+carson+concert+mosh+pit+live+2026'}],cap:['Ken Carson live is controlled chaos. This crowd footage is insane.','Opium rage music hits different when you see how its made. Ken in the studio.','The More Chaos era is real. This Ken Carson BTS proves it.'],tags:['#KenCarson','#Opium','#MoreChaos','#AGreatChaos','#RageMusic','#OpiumLabel']},
+{n:'Destroy Lonely',c:'rising',g:'Rage/Hip-Hop',hot:'Opium prince',badge:'hot-fire',vibe:'Dark fashion, Opium aesthetic, billions of TikTok views. Style IS the brand.',best:'Fashion meets rage, dark aesthetic content, concert energy, No Stylist era',gm:[{t:'No Stylist era footage',d:'The mixtape that defined his sound. BTS from this era is highly sought after.',u:'https://www.youtube.com/results?search_query=destroy+lonely+no+stylist+behind+the+scenes'},{t:'If Looks Could Kill sessions',d:'Debut album BTS. The snippet that went viral on TikTok originated from studio footage.',u:'https://www.youtube.com/results?search_query=destroy+lonely+if+looks+could+kill+studio'},{t:'Fashion and style content',d:'Lonely\'s fits are as much content as his music. Style compilations perform well.',u:'https://www.youtube.com/results?search_query=destroy+lonely+fashion+style+outfits'},{t:'Live performances',d:'The dark aesthetic of his shows. Visuals are cinematic.',u:'https://www.youtube.com/results?search_query=destroy+lonely+live+performance+concert+2026'}],cap:['Destroy Lonely in the studio with the lights off. The aesthetic is unmatched.','No Stylist era Lonely was a different breed. This BTS hits.','The Opium sound started here. Destroy Lonely making magic.'],tags:['#DestroyLonely','#Opium','#NoStylist','#IfLooksCouldKill','#BrokenHearts3']},
+{n:'Yeat',c:'rising',g:'Hip-Hop',hot:'Twizzy cult',badge:'hot-fire',vibe:'Alien sound, twizzy culture, bell-heavy beats. Fanbase is rabid and memeable.',best:'Studio bell-making sessions, personality moments, concert turnt energy',gm:[{t:'Studio sessions (producers share regularly)',d:'Watching Yeat find a bell sound and build a track around it is peak content.',u:'https://www.youtube.com/results?search_query=yeat+studio+session+making+beat+2026'},{t:'Concert and festival footage',d:'Yeat crowds are unhinged. The turnt energy is content gold.',u:'https://www.youtube.com/results?search_query=yeat+concert+live+2026+festival'},{t:'Funny personality compilations',d:'Yeat being Yeat. The humor is why the cult loves him.',u:'https://www.youtube.com/results?search_query=yeat+funny+moments+personality'}],cap:['The bells in Yeat studio sessions hit different. Twizzy forever.','Yeat live is an out-of-body experience. This crowd is GONE.','Nobody sounds like Yeat. This studio clip shows why.'],tags:['#Yeat','#Twizzy','#2093','#Lyfestyle','#TwizzyRich','#Tonka']},
+{n:'Summrs',c:'rising',g:'Plugg/Melodic',hot:'Underground godfather',badge:'hot-bolt',vibe:'Melodic underground pioneer. Influenced an entire generation. Plugg scene royalty.',best:'Raw melodic freestyle sessions, SoundCloud era footage, plugg production BTS',gm:[{t:'SoundCloud era footage',d:'Early Summrs content from the plugg wave origin. Fans worship this era.',u:'https://www.youtube.com/results?search_query=summrs+soundcloud+era+early+music'},{t:'Studio freestyle sessions',d:'Summrs flowing over plugg beats. Raw and melodic.',u:'https://www.youtube.com/results?search_query=summrs+studio+session+freestyle'},{t:'Live performances',d:'Underground show footage. Intimate venues, real energy.',u:'https://www.youtube.com/results?search_query=summrs+live+performance+concert'}],cap:['Summrs pioneered an entire sound and the underground knows it.','This Summrs freestyle is why he influenced a whole generation.','The plugg wave started here. Summrs in the studio creating history.'],tags:['#Summrs','#Plugg','#Underground','#SummrsXO','#PluggMusic']},
+{n:'Lucki',c:'rising',g:'Hip-Hop',hot:'Underground legend',badge:'hot-bolt',vibe:'Deeply loyal fanbase, introspective lean rap, cult-level devotion.',best:'Candid personal moments, introspective studio sessions, loyal fan interactions',gm:[{t:'Studio and recording sessions',d:'Lucki recording is raw and unfiltered. The aesthetic is dark and honest.',u:'https://www.youtube.com/results?search_query=lucki+studio+session+recording'},{t:'Fan meetup and show footage',d:'Lucki fans are devoted. The energy at his shows is personal.',u:'https://www.youtube.com/results?search_query=lucki+live+performance+concert+2026'},{t:'Interview compilations',d:'Lucki being candid about music and life. Authentic content.',u:'https://www.youtube.com/results?search_query=lucki+interview+2026'}],cap:['Lucki in the studio is pure honesty. No filter, just music.','The loyalty of Lucki fans is unmatched. This moment shows why.','This Lucki clip is raw and real. Exactly how he makes his music.'],tags:['#Lucki','#FreeWave','#Underground','#AlmostThere','#LuckiMusic']},
+{n:'Michael Jackson',c:'relevancy',g:'Pop/R&B',hot:'BIOPIC OUT NOW',badge:'hot-star',vibe:'Reverent, legendary, King of Pop forever. Biopic driving massive 2026 relevancy. POSITIVE CONTENT ONLY.',best:'Studio recording genius, iconic rehearsals, Thriller/Bad era BTS, dance creation moments',gm:[{t:'Michael biopic BTS and trailers',d:'The 2026 biopic starring Jaafar Jackson. Behind the scenes of the film itself is trending content.',u:'https://www.youtube.com/results?search_query=michael+jackson+biopic+2026+behind+the+scenes+trailer'},{t:'Thriller recording sessions',d:'Studio footage of MJ creating the best-selling album ever. Pure genius on display.',u:'https://www.youtube.com/results?search_query=michael+jackson+thriller+studio+session+recording'},{t:'This Is It rehearsal footage',d:'The concert film rehearsals. Shows his perfectionism and talent in full.',u:'https://www.youtube.com/results?search_query=michael+jackson+this+is+it+rehearsal'},{t:'Bad World Tour and concert footage',d:'His live performances are legendary. The choreography creation process.',u:'https://www.youtube.com/results?search_query=michael+jackson+bad+tour+concert+behind+the+scenes'},{t:'Neverland studio and creative sessions',d:'MJ creating music at home. The genius at work in his own space.',u:'https://www.youtube.com/results?search_query=michael+jackson+neverland+studio+recording+session'}],cap:['The King of Pop in the studio is pure magic. Nobody did it like MJ.','This Michael Jackson rehearsal footage shows why he was the greatest performer ever.','Behind the music with MJ. The dedication to perfection was unmatched.'],tags:['#MichaelJackson','#MJ','#KingOfPop','#Thriller','#MichaelBiopic','#MJForever','#JaafarJackson']},
+{n:'BabyTron',c:'rising',g:'Hip-Hop',hot:'Detroit cult humor',badge:'hot-bolt',vibe:'ShittyBoyz. Witty punchlines, scam rap, Detroit energy. Humor IS the brand.',best:'Freestyle sessions with crazy punchlines, funny personality moments, Detroit crew footage',gm:[{t:'Freestyle compilations',d:'BabyTron punchlines are endlessly clippable. Each bar is a potential viral moment.',u:'https://www.youtube.com/results?search_query=babytron+freestyle+punchlines'},{t:'ShittyBoyz crew content',d:'The group dynamic is funny and authentic. Crew footage performs well.',u:'https://www.youtube.com/results?search_query=babytron+shittyboyz+behind+the+scenes'},{t:'On The Radar freestyle',d:'His OTR appearance was iconic. Quotable bars throughout.',u:'https://www.youtube.com/results?search_query=babytron+on+the+radar+freestyle'}],cap:['BabyTron punchlines are a different level of creativity. Detroit built different.','The ShittyBoyz energy is unmatched. This clip is pure Detroit.','BabyTron freestyling is a masterclass in wordplay.'],tags:['#BabyTron','#ShittyBoyz','#Detroit','#ScamRap','#MichiganRap']},
+{n:'Homixide Gang',c:'rising',g:'Rage/Hip-Hop',hot:'Opium chaos duo',badge:'hot-fire',vibe:'Opium label duo. Pure chaos energy. Beno and Meechie are unhinged.',best:'Chaotic studio sessions, concert mayhem, Opium crew moments',gm:[{t:'Studio sessions',d:'The energy when both of them are in the studio is chaotic and entertaining.',u:'https://www.youtube.com/results?search_query=homixide+gang+studio+session'},{t:'Live shows and concerts',d:'Their shows are pure mayhem. Crowd footage is always viral.',u:'https://www.youtube.com/results?search_query=homixide+gang+live+concert+2026'},{t:'Opium label group content',d:'HXG with Carti, Ken Carson, Lonely. Label dynamics.',u:'https://www.youtube.com/results?search_query=homixide+gang+opium+label+behind+the+scenes'}],cap:['Homixide Gang in the studio is pure unfiltered chaos. Opium energy.','The HXG live show experience is not for the weak. This crowd footage proves it.','Beno and Meechie are the most entertaining duo in rap right now.'],tags:['#HomixideGang','#HXG','#Opium','#Beno','#Meechie','#OpiumLabel']},
+{n:'Tyla',c:'rising',g:'Amapiano/Pop',hot:'Global breakout',badge:'hot-bolt',vibe:'South African star, amapiano to global pop, Water was massive. Dance content is king.',best:'Dance creation BTS, studio vocal sessions, South African culture, performance prep',gm:[{t:'Water music video and dance BTS',d:'The Water choreo became a global trend. Behind the scenes of the creation.',u:'https://www.youtube.com/results?search_query=tyla+water+behind+the+scenes+dance'},{t:'Studio vocal sessions',d:'Her voice in raw studio format is beautiful content.',u:'https://www.youtube.com/results?search_query=tyla+studio+session+recording+vocals'},{t:'Grammys and awards BTS',d:'Her Grammy win moment and behind the scenes at awards shows.',u:'https://www.youtube.com/results?search_query=tyla+grammys+behind+the+scenes+2026'}],cap:['Tyla brought amapiano to the world stage. This BTS shows the magic.','This Tyla studio moment radiates star power. The future of global pop.','From South Africa to everywhere. Tyla behind the scenes is everything.'],tags:['#Tyla','#Water','#Amapiano','#SouthAfrica','#TylaMusic','#Grammy']},
+{n:'Ice Spice',c:'rising',g:'Hip-Hop',hot:'Bronx to global',badge:'hot-bolt',vibe:'Bronx drill to mainstream. Personality-driven. The memes fuel engagement.',best:'Personality moments, studio sessions, funny candid clips, performance energy',gm:[{t:'Studio recording sessions',d:'Ice Spice making hits. The casual confidence is the content.',u:'https://www.youtube.com/results?search_query=ice+spice+studio+session+recording'},{t:'Interview personality moments',d:'She is endlessly quotable and memeable. Interview clips go viral.',u:'https://www.youtube.com/results?search_query=ice+spice+interview+funny+moments+2026'},{t:'Concert and festival sets',d:'Her crowd control and stage presence have grown massively.',u:'https://www.youtube.com/results?search_query=ice+spice+concert+live+performance+2026'}],cap:['Ice Spice went from the Bronx to global domination. This BTS shows the journey.','The personality of Ice Spice is unlimited content. This clip is gold.','Making hits look effortless. Ice Spice in her element.'],tags:['#IceSpice','#Munch','#Princess','#BronxDrill','#IceSpiceMusic']},
+{n:'Central Cee',c:'rising',g:'UK Rap',hot:'UK to global',badge:'hot-bolt',vibe:'UK drill meets melody. Global crossover. Work ethic content performs well.',best:'Studio sessions, UK lifestyle footage, global tour BTS, personality moments',gm:[{t:'Studio sessions',d:'Cench in the studio shows the global drill sound being built.',u:'https://www.youtube.com/results?search_query=central+cee+studio+session+recording+2026'},{t:'YouTube documentaries and BTS',d:'His own channel has studio vlogs and tour footage.',u:'https://www.youtube.com/results?search_query=central+cee+behind+the+scenes+documentary'},{t:'Festival and tour footage',d:'His global reach means festival footage from everywhere.',u:'https://www.youtube.com/results?search_query=central+cee+live+performance+festival+2026'}],cap:['Central Cee in the studio goes crazy. UK drill meets global stardom.','This BTS Central Cee moment shows why he blew up worldwide.','The work ethic of Central Cee is insane. Watch this session.'],tags:['#CentralCee','#Cench','#UKDrill','#UKRap','#WildWest','#CentralCeeMusic']},
+{n:'Mk.gee',c:'rising',g:'Indie/Alt',hot:'Critics obsessed',badge:'hot-bolt',vibe:'Guitar genius, lo-fi aesthetic, Pitchfork darling. The anti-algorithm artist.',best:'Raw guitar sessions, lo-fi production BTS, intimate live performances',gm:[{t:'Guitar and production sessions',d:'His guitar tone is iconic. Watching him build tracks is mesmerizing for indie fans.',u:'https://www.youtube.com/results?search_query=mk.gee+studio+session+guitar'},{t:'Live intimate performances',d:'Small venue sets and acoustic content. The rawness is the appeal.',u:'https://www.youtube.com/results?search_query=mk.gee+live+performance+acoustic'},{t:'Interviews about creative process',d:'He speaks about music differently. Thoughtful content that indie fans love.',u:'https://www.youtube.com/results?search_query=mk.gee+interview+creative+process'}],cap:['Mk.gee guitar tone is genuinely unmistakable. This studio clip is pure indie gold.','The way Mk.gee builds a song is mesmerizing. Anti-algorithm music at its finest.','This Mk.gee moment is why the indie world is obsessed right now.'],tags:['#Mkgee','#IndieMusic','#LoFi','#Guitar','#IndieRock','#AlternativeMusic']},
+{n:'Redveil',c:'rising',g:'Hip-Hop',hot:'Self-made prodigy',badge:'hot-bolt',vibe:'Does everything himself. Producer, rapper, curator. Gen-Z boom-bap energy.',best:'Self-produced studio sessions, beat-making BTS, DIY creative process',gm:[{t:'Beat making and production sessions',d:'Redveil produces all his own work. Watching the process is the content.',u:'https://www.youtube.com/results?search_query=redveil+studio+session+producing+beat'},{t:'DIY music video BTS',d:'He directs and edits his own visuals. The independence is inspiring.',u:'https://www.youtube.com/results?search_query=redveil+music+video+behind+the+scenes'},{t:'Live performances',d:'Intimate shows with real fan connection.',u:'https://www.youtube.com/results?search_query=redveil+live+performance+concert'}],cap:['Redveil produces, raps, and directs everything himself. This BTS is inspiring.','The DIY spirit of Redveil is what hip-hop was built on. Watch this.','Self-made in every sense. This Redveil studio clip proves it.'],tags:['#Redveil','#DIY','#SelfProduced','#Underground','#BoomBap','#IndependentRap']}
+];
+
+var SP=[
+{i:'YT',n:'YouTube - studio BTS',t:'Best original source',u:function(f){return 'https://www.youtube.com/results?search_query='+encodeURIComponent(f+' studio session behind the scenes')+'&sp=CAI%3D'}},
+{i:'YT',n:'YouTube - interviews',t:'Genius, Zane Lowe, Nardwuar',u:function(f){return 'https://www.youtube.com/results?search_query='+encodeURIComponent(f+' interview')+'&sp=EgIYAg%3D%3D'}},
+{i:'YT',n:'YouTube - live',t:'Concerts and festivals',u:function(f){return 'https://www.youtube.com/results?search_query='+encodeURIComponent(f+' live performance official')}},
+{i:'YT',n:'YouTube - documentary',t:'Official docs and BTS films',u:function(f){return 'https://www.youtube.com/results?search_query='+encodeURIComponent(f+' documentary behind the scenes')}},
+{i:'IG',n:'Instagram Reels',t:'Artist official reels',u:function(f){return 'https://www.instagram.com/'+encodeURIComponent(f.replace(/[\s.$\']+/g,'').toLowerCase())+'/reels/'}},
+{i:'TT',n:'TikTok',t:'Artist official TikToks',u:function(f){return 'https://www.tiktok.com/search?q='+encodeURIComponent(f+' studio behind the scenes')+'&t=video'}},
+{i:'X',n:'Twitter/X video',t:'Candid clips',u:function(f){return 'https://twitter.com/search?q='+encodeURIComponent(f+' studio OR "behind the scenes"')+'&f=video'}},
+{i:'GG',n:'Google Videos',t:'Catches everything',u:function(f){return 'https://www.google.com/search?q='+encodeURIComponent(f+' behind the scenes studio original')+'&tbm=vid&tbs=sbd:1'}}
+];
+
+function showTab(n){document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('on')});document.querySelectorAll('.pane').forEach(function(p){p.classList.remove('on')});document.querySelector('.tab[onclick="showTab(\''+n+'\')"]').classList.add('on');document.getElementById('pane-'+n).classList.add('on')}
+
+function renderA(data){
+var el=document.getElementById('a-results');if(!data||!data.length){el.innerHTML='<div class="empty">No artists found.</div>';return}
+var h='';for(var i=0;i<data.length;i++){var a=data[i];var s=a.n.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+var catTag=a.c==='legend'?'<span class="tg tg-l">GONE TOO SOON</span>':a.c==='cult'?'<span class="tg tg-c">CULT FOLLOWING</span>':a.c==='rising'?'<span class="tg tg-g">RISING</span>':'<span class="tg tg-t">RELEVANCY WAVE</span>';
+h+='<div class="card"><div class="card-top"><div class="card-num">'+(i+1)+'</div><div class="card-body">'
++'<div class="card-name">'+a.n+' <span class="card-hot '+a.badge+'">'+a.hot+'</span></div>'
++'<div class="card-desc">'+a.best+'</div>'
++'<div class="card-vibe">"'+a.vibe+'"</div>'
++'<div>'+catTag+' <span class="tg tg-g">'+a.g+'</span></div>'
++'<div class="btns">'
++'<button class="b b-t" onclick="event.stopPropagation();toggleGM('+i+')">Goldmine sources</button>'
++'<button class="b" onclick="event.stopPropagation();jumpSearch(\''+s+'\')">Search all platforms</button>'
++'<button class="b b-a" onclick="event.stopPropagation();openCap(\''+s+'\')">Caption</button>'
++'</div></div></div>'
++'<div class="gm" id="gm-'+i+'">'+buildGM(a)+'</div></div>'}
+el.innerHTML=h}
+
+function buildGM(a){var h='';for(var i=0;i<a.gm.length;i++){var g=a.gm[i];h+='<div class="gm-item"><div class="gm-title">'+g.t+'</div><div class="gm-text">'+g.d+'</div><a href="'+g.u+'" target="_blank" class="b" style="margin-top:8px">Find on YouTube</a></div>'}return h}
+
+function toggleGM(i){var e=document.getElementById('gm-'+i);if(e)e.classList.toggle('open')}
+
+function filterA(btn,f){document.querySelectorAll('.pill').forEach(function(p){p.classList.remove('on')});btn.classList.add('on');if(f==='all'){renderA(D);return}var r=[];for(var i=0;i<D.length;i++){if(D[i].c===f)r.push(D[i])}renderA(r)}
+
+function searchA(){var q=document.getElementById('a-search').value.toLowerCase().trim();if(!q){renderA(D);return}var r=[];for(var i=0;i<D.length;i++){if(D[i].n.toLowerCase().indexOf(q)>-1||D[i].g.toLowerCase().indexOf(q)>-1)r.push(D[i])}renderA(r.length?r:D)}
+
+function jumpSearch(n){showTab('search');document.getElementById('clip-input').value=n;findClips()}
+
+function findClips(){var n=document.getElementById('clip-input').value.trim();if(!n)return;var s=n.replace(/\\/g,'\\\\').replace(/'/g,"\\'");var p1='',p2='';for(var i=0;i<4;i++)p1+='<a class="pc" href="'+SP[i].u(n)+'" target="_blank"><div class="pc-i">'+SP[i].i+'</div><div class="pc-n">'+SP[i].n+'</div><div class="pc-t">'+SP[i].t+'</div></a>';for(var i=4;i<SP.length;i++)p2+='<a class="pc" href="'+SP[i].u(n)+'" target="_blank"><div class="pc-i">'+SP[i].i+'</div><div class="pc-n">'+SP[i].n+'</div><div class="pc-t">'+SP[i].t+'</div></a>';document.getElementById('clip-results').innerHTML='<div class="dh">'+n+'</div><div class="ds">Find original clips. Every link targets official and original content.</div><div class="sl">YouTube (best for originals)</div><div class="plat-grid">'+p1+'</div><div class="sl">Social platforms</div><div class="plat-grid">'+p2+'</div><div class="tip"><strong>Original content rule:</strong> Always pull from the artist official channel, label channel, or verified interview channel. Avoid fan repost accounts.</div><div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap"><button class="b" onclick="openAllC(\''+s+'\')">Open all 8 at once</button><button class="b b-a" onclick="openCap(\''+s+'\')">Generate caption</button></div>'}
+
+function openAllC(n){for(var i=0;i<SP.length;i++)window.open(SP[i].u(n),'_blank')}
+
+function openCap(n){var a=null;for(var i=0;i<D.length;i++){if(D[i].n.toLowerCase()===n.toLowerCase()){a=D[i];break}}var b=document.getElementById('m-body');if(a){var ci=Math.floor(Math.random()*a.cap.length);var ai=(ci+1)%a.cap.length;var tags=EV.concat(a.tags);b.innerHTML='<div class="cb"><div class="cl">Caption 1</div><div class="ct" id="cap1">'+a.cap[ci]+'</div><button class="cs" onclick="cpS(this,\'cap1\')">Copy</button></div><div class="cb"><div class="cl">Caption 2</div><div class="ct" id="cap2">'+a.cap[ai]+'</div><button class="cs" onclick="cpS(this,\'cap2\')">Copy</button></div><div class="hb"><div class="cl">Hashtags</div><div class="ht" id="hashtags">'+tags.join(' ')+'</div><button class="cs" onclick="cpS(this,\'hashtags\')" style="position:relative;margin-top:8px">Copy hashtags</button></div><div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap"><a href="https://www.tiktok.com/search?q='+encodeURIComponent(n+' '+new Date().getFullYear())+'" target="_blank" class="b">TikTok trending</a><a href="https://www.instagram.com/explore/tags/'+encodeURIComponent(n.replace(/[\s.]+/g,'').toLowerCase())+'/" target="_blank" class="b">IG tags</a></div>'}else{var w=n.replace(/[^a-zA-Z0-9 ]/g,'').split(' ');var ct=[];for(var i=0;i<w.length;i++){if(w[i].length>1)ct.push('#'+w[i].charAt(0).toUpperCase()+w[i].slice(1).toLowerCase())}var tags=EV.concat(ct);b.innerHTML='<div class="cb"><div class="cl">Caption</div><div class="ct" id="cap1">This '+n+' studio moment is pure magic. The raw talent speaks for itself.</div><button class="cs" onclick="cpS(this,\'cap1\')">Copy</button></div><div class="cb"><div class="cl">Alt caption</div><div class="ct" id="cap2">Behind the scenes with '+n+'. This is what making music really looks like.</div><button class="cs" onclick="cpS(this,\'cap2\')">Copy</button></div><div class="hb"><div class="cl">Hashtags</div><div class="ht" id="hashtags">'+tags.join(' ')+'</div><button class="cs" onclick="cpS(this,\'hashtags\')" style="position:relative;margin-top:8px">Copy hashtags</button></div>'}document.getElementById('modal').classList.add('open')}
+
+function cpS(btn,id){var t=document.getElementById(id).textContent;navigator.clipboard.writeText(t).then(function(){btn.textContent='Copied!';btn.classList.add('ok');setTimeout(function(){btn.textContent=id==='hashtags'?'Copy hashtags':'Copy';btn.classList.remove('ok')},1500)})}
+function copyAll(){var c=document.getElementById('cap1');var h=document.getElementById('hashtags');if(c&&h)navigator.clipboard.writeText(c.textContent+'\n\n'+h.textContent)}
+function closeModal(){document.getElementById('modal').classList.remove('open')}
+
+// YT-DLP COMMAND GENERATOR
+function genCmd(){
+  var url=document.getElementById('yt-url').value.trim();
+  var artist=document.getElementById('yt-artist').value.trim()||'clip';
+  var start=document.getElementById('yt-start').value.trim();
+  var end=document.getElementById('yt-end').value.trim();
+  var fmt=document.getElementById('yt-fmt').value;
+  if(!url){alert('Paste a YouTube URL first');return}
+  var filename=artist.replace(/[^a-zA-Z0-9 ]/g,'').replace(/\s+/g,'_');
+  var cmd='yt-dlp';
+  if(start||end){
+    var s=start||'0:00';var e=end||'inf';
+    cmd+=' --download-sections "*'+s+'-'+e+'"';
+  }
+  if(fmt==='mp4')cmd+=' -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best" --merge-output-format mp4';
+  else if(fmt==='mp3')cmd+=' -x --audio-format mp3';
+  else cmd+=' -f best';
+  cmd+=' -o "'+filename+'_%(title)s.%(ext)s"';
+  cmd+=' "'+url+'"';
+  document.getElementById('cmd-text').textContent=cmd;
+  document.getElementById('cmd-output').style.display='block';
+}
+function copyCmd(){
+  var t=document.getElementById('cmd-text').textContent;
+  navigator.clipboard.writeText(t).then(function(){
+    var b=document.getElementById('cmd-copy');b.textContent='Copied!';b.classList.add('ok');
+    setTimeout(function(){b.textContent='Copy';b.classList.remove('ok')},1500);
+  });
+}
+function addFromCmd(){
+  var artist=document.getElementById('yt-artist').value.trim()||'Unknown';
+  var url=document.getElementById('yt-url').value.trim();
+  var start=document.getElementById('yt-start').value.trim();
+  var end=document.getElementById('yt-end').value.trim();
+  var desc=url+(start?' ['+start+'-'+end+']':'');
+  var clips=getClips();clips.unshift({artist:artist,url:desc,status:'saved',date:new Date().toLocaleDateString()});
+  saveClips(clips);
+}
+
+// CLIP TRACKER
+function getClips(){try{return JSON.parse(localStorage.getItem('cc_clips')||'[]')}catch(e){return[]}}
+function saveClips(clips){localStorage.setItem('cc_clips',JSON.stringify(clips));renderTracker();updateCount()}
+function addClip(){var artist=document.getElementById('tr-artist').value.trim();var url=document.getElementById('tr-url').value.trim();var status=document.getElementById('tr-status').value;if(!artist||!url)return;var clips=getClips();clips.unshift({artist:artist,url:url,status:status,date:new Date().toLocaleDateString()});saveClips(clips);document.getElementById('tr-artist').value='';document.getElementById('tr-url').value=''}
+function removeClip(i){var clips=getClips();clips.splice(i,1);saveClips(clips)}
+function cycleStatus(i){var clips=getClips();var order=['new','saved','used'];var cur=order.indexOf(clips[i].status);clips[i].status=order[(cur+1)%3];saveClips(clips)}
+function renderTracker(){var clips=getClips();var el=document.getElementById('tracker-list');if(!clips.length){el.innerHTML='<div class="empty">No clips tracked yet. Add your first one above.</div>';return}var h='';for(var i=0;i<clips.length;i++){var c=clips[i];var sc=c.status==='used'?'tr-used':c.status==='saved'?'tr-saved':'tr-new';h+='<div class="tr-card"><div class="tr-status '+sc+'" onclick="cycleStatus('+i+')" style="cursor:pointer" title="Click to change status"></div><div class="tr-info"><div class="tr-title">'+c.artist+'</div><div class="tr-meta">'+c.url+' &middot; '+c.date+' &middot; '+c.status+'</div></div><div class="tr-actions"><button class="b" onclick="cycleStatus('+i+')" style="padding:4px 8px;font-size:10px">Status</button><button class="b" onclick="removeClip('+i+')" style="padding:4px 8px;font-size:10px;color:var(--red)">X</button></div></div>'}el.innerHTML=h}
+function updateCount(){var c=getClips();document.getElementById('tracker-count').textContent=c.length}
+
+document.getElementById('a-search').addEventListener('keydown',function(e){if(e.key==='Enter')searchA()});
+document.getElementById('clip-input').addEventListener('keydown',function(e){if(e.key==='Enter')findClips()});
+renderA(D);renderTracker();updateCount();
+</script>
+</body>
+</html>
